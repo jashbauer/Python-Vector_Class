@@ -15,7 +15,13 @@ class Vec:
             "Unit Version": self.v_unit
         }
 
-    def vec_length(self):
+    def scale(self, c: float) -> list:
+        """Returns a c scaled up version of the vector."""
+        scaled = [comp*c for comp in self.elements]
+        return scaled
+
+    def vec_length(self) -> float:
+        """Returns the length (magnitude) of supplied vector."""
         import math
         squared_sum = 0
         for element in self.elements:
@@ -23,7 +29,8 @@ class Vec:
 
         return math.sqrt(squared_sum)
 
-    def unit_of_v(self):
+    def unit_of_v(self) -> list:
+        """Returns unit vector pointing to the same direction of v."""
         unit = []
         for element in self.elements:
             unit.append(element / self.vector_length)
@@ -55,12 +62,13 @@ class Vec:
     def vector_cross_length(self, other_vec, theta):
         """Returns length of cross product between two vectors. Theta must be in degrees."""
         import math
-        if self.dim != 3:
+        if self.dim != 3 or other_vec.dim != 3:
             raise Exception("Cross product not defined outside of R3")
         else:
             return self.vector_length*other_vec.vector_length*math.sin(math.radians(theta))
 
-    def is_orthogonal(self, other_vec):
+    def is_orthogonal(self, other_vec) -> bool:
+        """Returns a boolean indicating orthogonality between two vectors."""
         if self * other_vec == 0:
             return True
         else:
